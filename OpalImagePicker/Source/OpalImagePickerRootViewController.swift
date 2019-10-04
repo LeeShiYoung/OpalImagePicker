@@ -430,11 +430,7 @@ extension OpalImagePickerRootViewController: UICollectionViewDelegate {
             let image = cell.imageView.image else { return }
         set(image: image, indexPath: indexPath, isExternal: collectionView == self.externalCollectionView)
         let indexPathsForSelectedItems = selectedIndexPaths
-               let externalIndexPaths = externalSelectedIndexPaths
-               guard indexPathsForSelectedItems.count + externalIndexPaths.count > 0 else {
-                   cancelTapped()
-                   return
-               }
+               
         var photoAssets: [PHAsset] = []
         for indexPath in indexPathsForSelectedItems {
             guard indexPath.item < self.photoAssets.count else { continue }
@@ -473,12 +469,7 @@ extension OpalImagePickerRootViewController: UICollectionViewDelegate {
     ///   - indexPath: the `IndexPath`
     public func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         set(image: nil, indexPath: indexPath, isExternal: collectionView == self.externalCollectionView)
-        let indexPathsForSelectedItems = selectedIndexPaths
-               let externalIndexPaths = externalSelectedIndexPaths
-               guard indexPathsForSelectedItems.count + externalIndexPaths.count > 0 else {
-                   cancelTapped()
-                   return
-               }
+       let indexPathsForSelectedItems = selectedIndexPaths
         var photoAssets: [PHAsset] = []
         for indexPath in indexPathsForSelectedItems {
             guard indexPath.item < self.photoAssets.count else { continue }

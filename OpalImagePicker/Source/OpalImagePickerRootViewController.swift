@@ -147,6 +147,7 @@ open class OpalImagePickerRootViewController: UIViewController {
         fetchPhotos()
         
         let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: OpalImagePickerCollectionViewLayout())
+        
         setup(collectionView: collectionView)
         view.addSubview(collectionView)
         self.collectionView = collectionView

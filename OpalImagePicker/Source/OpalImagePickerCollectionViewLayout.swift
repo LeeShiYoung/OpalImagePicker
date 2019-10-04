@@ -9,11 +9,13 @@
 import UIKit
 
 /// Collection View Layout that evenly lays out the images in the Image Picker.
-open class OpalImagePickerCollectionViewLayout: UICollectionViewLayout {
+open class
+
+OpalImagePickerCollectionViewLayout: UICollectionViewLayout {
     
     /// Estimated Image Size. Used as a minimum image size to determine how many images should be go across to cover the width. You can override for different display preferences. Assumed to be greater than 0.
     open var estimatedImageSize: CGFloat {
-        guard let collectionView = self.collectionView else { return 80 }
+        guard let collectionView = self.collectionView else { return (UIScreen.main.bounds.size.width - 2) / 3 }
         return collectionView.traitCollection.horizontalSizeClass == .regular ? 160 : 80
     }
     

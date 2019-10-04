@@ -275,7 +275,7 @@ open class OpalImagePickerRootViewController: UIViewController {
         }
     }
     
-    @objc func doneTapped() {
+    @objc open func doneTapped() {
         guard let imagePicker = navigationController as? OpalImagePickerController else { return }
         
         let indexPathsForSelectedItems = selectedIndexPaths

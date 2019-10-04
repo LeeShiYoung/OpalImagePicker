@@ -12,6 +12,10 @@ import Photos
 /// Image Picker Controller Delegate. Notifies when images are selected or image picker is cancelled.
 @objc public protocol OpalImagePickerControllerDelegate: class {
     
+    @objc optional func imagePicker(_ picker: OpalImagePickerController, didSelectImage images: [UIImage])
+    
+    
+    
     /// Image Picker did finish picking images. Provides an array of `UIImage` selected. Also provides external
     /// images if they are used. Consider using setting `maximumSelectionsAllowed` when using this delegate method
     /// because several `UIImage` objects are stored in memory when you implement this delegate function.

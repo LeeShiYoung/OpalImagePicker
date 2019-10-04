@@ -472,6 +472,40 @@ extension OpalImagePickerRootViewController: UICollectionViewDelegate {
     ///   - indexPath: the `IndexPath`
     public func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         set(image: nil, indexPath: indexPath, isExternal: collectionView == self.externalCollectionView)
+        let indexPathsForSelectedItems = selectedIndexPaths
+               let externalIndexPaths = externalSelectedIndexPaths
+               guard indexPathsForSelectedItems.count + externalIndexPaths.count > 0 else {
+                   cancelTapped()
+                   return
+               }
+        var photoAssets: [PHAsset] = []
+        for indexPath in indexPathsForSelectedItems {
+            guard indexPath.item < self.photoAssets.count else { continue }
+            photoAssets += [self.photoAssets.object(at: indexPath.item)]
+        }
+        guard shouldExpandImagesFromAssets() else { return }
+        let manager = PHImageManager.default()
+        let options = PHImageRequestOptions()
+        options.deliveryMode = .highQualityFormat
+        options.isSynchronous = true
+        options.isNetworkAccessAllowed = true
+        
+        var storeImage = [UIImage]()
+        
+        for asset in photoAssets {
+            manager.requestImageData(for: asset, options: options, resultHandler: { [weak self] (data, _, _, _) in
+                guard let strongSelf = self,
+                    let data = data,
+                    let image = UIImage(data: data) else { return }
+                
+                storeImage += [image]
+                
+            })
+        }
+        
+        guard let imagePicker = navigationController as? OpalImagePickerController else { return }
+        
+        delegate?.imagePicker?(imagePicker, didSelectImage: storeImage)
     }
     
     public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
